@@ -1,5 +1,3 @@
-[![Docker Repository on Quay.io](https://quay.io/repository/jasl8r/mattermost/status "Docker Repository on Quay.io")](https://quay.io/repository/jasl8r/mattermost) [![](https://badge.imagelayers.io/jasl8r/mattermost:latest.svg)](https://imagelayers.io/?images=jasl8r/mattermost:latest 'Get your own badge on imagelayers.io')
-
 # Docker Mattermost
 
 - [Introduction](#introduction)
@@ -33,39 +31,26 @@
 
 # Introduction
 
-Dockerfile to build a [Mattermost](https://www.mattermost.org/) container image.
+Dockerfile to build a [Mattermost](https://www.mattermost.org/) image.
 
 # Contributing
 
 If you find this image useful here's how you can help:
 
 - Send a Pull Request with your awesome new features and bug fixes
-- Help new users with [Issues](https://github.com/jasl8r/docker-mattermost/issues) they may encounter
+- Help new users with [Issues](https://github.com/telota/docker-mattermost/issues) they may encounter
 
 # Issues
 
-Please file a issue request on the [issues](https://github.com/jasl8r/docker-mattermost/issues) page.
+Please file a issue request on the [issues](https://github.com/telota/docker-mattermost/issues) page.
 
 # Installation
 
-Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/jasl8r/mattermost) and is the recommended method of installation.
-
-> **Note**: Builds are also available on [Quay.io](https://quay.io/repository/jasl8r/mattermost)
-
-```bash
-docker pull jasl8r/mattermost:3.6.2
-```
-
-You can also pull the `latest` tag which is built from the repository *HEAD*
+There are currently no automated builds linked to the source repository,
+thus you must build the image locally.
 
 ```bash
-docker pull jasl8r/mattermost:latest
-```
-
-Alternatively you can build the image locally.
-
-```bash
-docker build -t jasl8r/mattermost github.com/jasl8r/docker-mattermost
+docker build -t telota/mattermost github.com/telota/docker-mattermost
 ```
 
 # Quick Start
@@ -73,7 +58,7 @@ docker build -t jasl8r/mattermost github.com/jasl8r/docker-mattermost
 The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/).
 
 ```bash
-wget https://raw.githubusercontent.com/jasl8r/docker-mattermost/master/docker-compose.yml
+curl -O https://raw.githubusercontent.com/telota/docker-mattermost/master/docker-compose.yml
 ```
 
 Generate and assign random strings to the `MATTERMOST_SECRET_KEY`, `MATTERMOST_LINK_SALT`, `MATTERMOST_RESET_SALT` and `MATTERMOST_INVITE_SALT` environment variables. Once set you should not change these values and ensure you backup these values.
@@ -109,7 +94,7 @@ docker run --name mattermost -d \
     --env 'MATTERMOST_RESET_SALT=long-and-random-alphanumeric-string' \
     --env 'MATTERMOST_INVITE_SALT=long-and-random-alphanumeric-string' \
     --volume /srv/docker/mattermost/mattermost:/opt/mattermost/data \
-    jasl8r/mattermost:3.6.2
+    telota/mattermost:3.7.3
 ```
 
 *Please refer to [Available Configuration Parameters](#available-configuration-parameters) to understand `MATTERMOST_PORT` and other configuration options*
@@ -142,7 +127,7 @@ Volumes can be mounted in docker by specifying the `-v` option in the docker run
 ```bash
 docker run --name mattermost -d \
     --volume /srv/docker/mattermost/mattermost:/opt/mattermost/data \
-    jasl8r/mattermost:3.6.2
+    telota/mattermost:3.7.3
 ```
 
 ## Database
@@ -173,7 +158,7 @@ docker run --name mattermost -d \
     --env 'DB_NAME=mattermost' \
     --env 'DB_USER=mattermost' --env 'DB_PASS=password' \
     --volume /srv/docker/mattermost/mattermost:/opt/mattermost/data \
-    jasl8r/mattermost:3.6.2
+    telota/mattermost:3.7.3
 ```
 
 #### Linking to MySQL Container
@@ -216,7 +201,7 @@ We are now ready to start the Mattermost application.
 ```bash
 docker run --name mattermost -d --link mattermost-mysql:mysql \
     --volume /srv/docker/mattermost/mattermost:/opt/mattermost/data \
-    jasl8r/mattermost:3.6.2
+    telota/mattermost:3.7.3
 ```
 
 Here the image will also automatically fetch the `MYSQL_DATABASE`, `MYSQL_USER` and `MYSQL_PASSWORD` variables from the mysql container as they are specified in the `docker run` command for the mysql container. This is made possible using the magic of docker links and works with the following images:
@@ -248,7 +233,7 @@ docker run --name mattermost -d \
      --env 'DB_NAME=mattermost' \
      --env 'DB_USER=mattermost' --env 'DB_PASS=password' \
      --volume /srv/docker/mattermost/mattermost:/opt/mattermost/data \
-     jasl8r/mattermost:3.6.2
+     telota/mattermost:3.7.3
 ```
 
 #### Linking to PostgreSQL Container
@@ -290,7 +275,7 @@ We are now ready to start the Mattermost application.
 ```bash
 docker run --name mattermost -d --link mattermost-postgres:postgres \
      --volume /srv/docker/mattermost/mattermost:/opt/mattermost/data \
-     jasl8r/mattermost:3.6.2
+     telota/mattermost:3.7.3
 ```
 
 Here the image will also automatically fetch the `POSTGRES_DB`, `POSTGRES_USER` and `POSTGRES_PASSWORD` variables from the postgres container as they are specified in the `docker run` command for the postgres container. This is made possible using the magic of docker links and works with the official [postgres](https://hub.docker.com/_/postgres/) image.
@@ -306,7 +291,7 @@ docker run --name mattermost -d \
     --env 'SMTP_USER=USER@gmail.com' --env 'SMTP_PASS=PASSWORD' \
     --env 'SMTP_HOST=smtp.gmail.com' --env 'SMTP_PORT=587' \
     --volume /srv/docker/mattermost/mattermost:/opt/mattermost/data \
-    jasl8r/mattermost:3.6.2
+    telota/mattermost:3.7.3
 ```
 
 Please refer the [Available Configuration Parameters](#available-configuration-parameters) section for the list of SMTP parameters that can be specified.
@@ -375,8 +360,8 @@ chmod 400 /srv/docker/mattermost/nginx/mattermost.key
 Download the necessary docker-compose files.
 
 ```bash
-wget https://raw.githubusercontent.com/jasl8r/docker-mattermost/master/samples/nginx/docker-compose.yml
-wget https://raw.githubusercontent.com/jasl8r/docker-mattermost/master/samples/nginx/mattermost.template
+curl -O https://raw.githubusercontent.com/telota/docker-mattermost/master/samples/nginx/docker-compose.yml
+curl -O https://raw.githubusercontent.com/telota/docker-mattermost/master/samples/nginx/mattermost.template
 mv mattermost.template /srv/docker/mattermost/nginx/
 ```
 
@@ -493,9 +478,7 @@ To upgrade to newer Mattermost releases, simply follow this 4 step upgrade proce
 
 - **Step 1**: Update the docker image.
 
-```bash
-docker pull jasl8r/mattermost:3.6.2
-```
+See [installation notes](#Installation) above.
 
 - **Step 2**: Stop and remove the currently running image
 
@@ -511,7 +494,7 @@ Backup your database and local file storage by your preferred backup method.  Al
 - **Step 4**: Start the image
 
 ```bash
-docker run --name mattermost -d [OPTIONS] jasl8r/mattermost:3.6.2
+docker run --name mattermost -d [OPTIONS] telota/mattermost:3.7.3
 ```
 
 ## Shell Access
