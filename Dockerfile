@@ -1,5 +1,5 @@
+# TODO maybe base on the official go image
 FROM alpine:3.5
-MAINTAINER jasl8r@alum.wpi.edu
 
 ENV MATTERMOST_VERSION=3.7.3 \
     MATTERMOST_HOME="/opt/mattermost"
@@ -11,16 +11,15 @@ ENV MATTERMOST_DATA_DIR="${MATTERMOST_HOME}/data" \
     MATTERMOST_CONF_DIR="${MATTERMOST_HOME}/config" \
     MATTERMOST_LOG_DIR="/var/log/mattermost"
 
-RUN apk --no-cache add bash gettext \
-    mysql-client postgresql-client \
-    ca-certificates
+RUN apk --no-cache add \
+    bash gettext mysql-client postgresql-client ca-certificates
 
+# TODO include build procedure here
 COPY assets/build/ ${MATTERMOST_BUILD_DIR}/
 RUN bash ${MATTERMOST_BUILD_DIR}/install.sh
 
 COPY assets/runtime/ ${MATTERMOST_RUNTIME_DIR}/
 COPY entrypoint.sh /sbin/entrypoint.sh
-RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 80/tcp
 
