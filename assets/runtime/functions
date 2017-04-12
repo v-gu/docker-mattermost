@@ -283,8 +283,11 @@ configure() {
 }
 
 migrate() {
-  [[ -f ${MATTERMOST_DATA_DIR}/VERSION ]] && CACHE_VERSION=$(cat ${MATTERMOST_DATA_DIR}/VERSION)
-  CACHE_VERSION=${CACHE_VERSION:-2.0.0}
+  if [ -f ${MATTERMOST_DATA_DIR}/VERSION ]; then
+    CACHE_VERSION=$(cat ${MATTERMOST_DATA_DIR}/VERSION)
+  else
+    CACHE_VERSION=${MATTERMOST_VERSION}
+  fi
 
   if [[ $(vercmp ${MATTERMOST_VERSION} ${CACHE_VERSION}) -lt 0 ]]; then
     echo
