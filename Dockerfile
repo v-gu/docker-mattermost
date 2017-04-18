@@ -1,7 +1,7 @@
 # TODO maybe base on the official go image
 FROM alpine:3.5
 
-ENV MATTERMOST_VERSION=3.7.3 \
+ENV MATTERMOST_VERSION=3.8.0 \
     MATTERMOST_HOME="/opt/mattermost"
 
 ENV MATTERMOST_DATA_DIR="${MATTERMOST_HOME}/data" \
