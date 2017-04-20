@@ -3,7 +3,7 @@ version: '2'
 services:
   mattermost:
     restart: unless-stopped
-    image: funkyfuture/mattermost:3.8.0
+    image: funkyfuture/mattermost:3.8.1
     ports:
       - "8080:80"
     environment:
