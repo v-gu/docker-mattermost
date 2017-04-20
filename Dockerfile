@@ -1,29 +1,30 @@
 # TODO maybe base on the official go image
 FROM alpine:3.5
 
-ENV MATTERMOST_VERSION=3.8.0 \
-    MATTERMOST_HOME="/opt/mattermost"
-
-ENV MATTERMOST_DATA_DIR="${MATTERMOST_HOME}/data" \
-    MATTERMOST_BUILD_DIR="${MATTERMOST_HOME}/build" \
-    MATTERMOST_RUNTIME_DIR="${MATTERMOST_HOME}/runtime" \
-    MATTERMOST_INSTALL_DIR="${MATTERMOST_HOME}/mattermost" \
-    MATTERMOST_CONF_DIR="${MATTERMOST_HOME}/config" \
-    MATTERMOST_LOG_DIR="/var/log/mattermost"
+ENV MATTERMOST_VERSION=3.8.1 \
+    MATTERMOST_DATA_DIR="/opt/mattermost/data" \
+    MATTERMOST_BUILD_DIR="/opt/mattermost/build" \
+    MATTERMOST_RUNTIME_DIR="/opt/mattermost/runtime" \
+    MATTERMOST_INSTALL_DIR="/opt/mattermost/mattermost" \
+    MATTERMOST_CONF_DIR="/opt/mattermost/config" \
+    \
+    MM_SERVICESETTINGS_LISTENADDRESS=:80 \
+    MM_LOGSETTINGS_CONSOLE_LEVEL=INFO \
+    MM_LOGSETTINGS_ENABLEFILE=false \
+    MM_PASSWORDSETTINGS_MINIMUMLENGTH=12
 
 RUN apk --no-cache add \
-    bash gettext mysql-client postgresql-client ca-certificates
+    bash gettext mysql-client postgresql-client ca-certificates tini
 
 # TODO include build procedure here
 COPY assets/build/ ${MATTERMOST_BUILD_DIR}/
 RUN bash ${MATTERMOST_BUILD_DIR}/install.sh
 
-COPY assets/runtime/ ${MATTERMOST_RUNTIME_DIR}/
-COPY entrypoint.sh /sbin/entrypoint.sh
+COPY entrypoint.sh /
 
 EXPOSE 80/tcp
 
-VOLUME ["${MATTERMOST_DATA_DIR}", "${MATTERMOST_LOG_DIR}"]
+VOLUME ["${MATTERMOST_DATA_DIR}"]
 WORKDIR ${MATTERMOST_INSTALL_DIR}
-ENTRYPOINT ["/sbin/entrypoint.sh"]
-CMD ["app:start"]
+ENTRYPOINT ["tini", "--", "/entrypoint.sh"]
+CMD ["server"]

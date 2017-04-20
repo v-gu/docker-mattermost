@@ -4,7 +4,18 @@ This file only reflects the changes that are made in this image. Please refer to
 the Mattermost [CHANGELOG](http://docs.mattermost.com/administration/changelog.html)
 for the list of changes in Mattermost.
 
+## 3.8.0
+
+- mattermost 3.8.0
+- switches to Mattermost's environment variables for configuration, replace
+  the names in your configuration like this:
+  - `MATTERMOST_SECRET_KEY` -> `MM_SQLSETTINGS_ATRESTENCRYPTKEY`
+  - `MATTERMOST_LINK_SALT` -> `MM_FILESETTINGS_PUBLICLINKSALT`
+  - `MATTERMOST_RESET_SALT` -> `MM_EMAILSETTINGS_PASSWORDRESETSALT`
+  - `MATTERMOST_INVITE_SALT` -> `MM_EMAILSETTINGS_INVITESALT`
+
 ## 3.7.3
+
 - mattermost 3.7.3
 
 ## 3.6.2
