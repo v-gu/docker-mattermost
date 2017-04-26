@@ -1,25 +1,23 @@
-mysql:
-  restart: always
-  image: mysql:latest
-  environment:
-    - MYSQL_USER=mattermost
-    - MYSQL_PASSWORD=password
-    - MYSQL_DATABASE=mattermost
-    - MYSQL_ROOT_PASSWORD=password
-  volumes:
-    - /srv/docker/gitlab/mysql:/var/lib/mysql
+version: '2'
 
-mattermost:
-  restart: always
-  image: jasl8r/mattermost:3.1.0
-  links:
-    - mysql:mysql
-  ports:
-    - "8080:80"
-  environment:
-    - MATTERMOST_SECRET_KEY=long-and-random-alphanumeric-string
-    - MATTERMOST_LINK_SALT=long-and-random-alphanumeric-string
-    - MATTERMOST_RESET_SALT=long-and-random-alphanumeric-string
-    - MATTERMOST_INVITE_SALT=long-and-random-alphanumeric-string
-  volumes:
-    - /srv/docker/mattermost/mattermost:/opt/mattermost/data
+services:
+  mattermost:
+    restart: unless-stopped
+    image: funkyfuture/mattermost:3.8.1
+    ports:
+      - "8080:80"
+    environment:
+      # adjust these to your needs
+      - DB_PASS=password
+      - MM_SERVICESETTINGS_SITEURL=http://localhost:8080
+      # the following must be 32 characters long
+      - MM_SQLSETTINGS_ATRESTENCRYPTKEY=long-and-random-alphanumeric-string
+      - MM_FILESETTINGS_PUBLICLINKSALT=long-and-random-alphanumeric-string
+      - MM_EMAILSETTINGS_PASSWORDRESETSALT=long-and-random-alphanumeric-string
+      - MM_EMAILSETTINGS_INVITESALT=long-and-random-alphanumeric-string
+
+  postgres:
+    restart: unless-stopped
+    image: postgres:alpine
+    environment:
+      - POSTGRES_PASSWORD=password

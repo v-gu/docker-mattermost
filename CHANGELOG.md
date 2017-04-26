@@ -4,6 +4,42 @@ This file only reflects the changes that are made in this image. Please refer to
 the Mattermost [CHANGELOG](http://docs.mattermost.com/administration/changelog.html)
 for the list of changes in Mattermost.
 
+## 3.8.0
+
+- mattermost 3.8.0
+- switches to Mattermost's environment variables for configuration, replace
+  the names in your configuration like this:
+  - `MATTERMOST_SECRET_KEY` -> `MM_SQLSETTINGS_ATRESTENCRYPTKEY`
+  - `MATTERMOST_LINK_SALT` -> `MM_FILESETTINGS_PUBLICLINKSALT`
+  - `MATTERMOST_RESET_SALT` -> `MM_EMAILSETTINGS_PASSWORDRESETSALT`
+  - `MATTERMOST_INVITE_SALT` -> `MM_EMAILSETTINGS_INVITESALT`
+
+## 3.7.3
+
+- mattermost 3.7.3
+
+## 3.6.2
+
+- mattermost 3.6.2
+- add `MATTERMOST_LOG_CONSOLE_LEVEL`, `MATTERMOST_LOG_FILE_LEVEL` and
+  `MATTERMOST_LOG_FILE_FORMAT`
+
+## 3.5.1
+
+- mattermost 3.5.1
+
+## 3.4.0-1
+
+- add error message to require upgrading to 3.0 or 3.1 before any higher version
+
+## 3.4.0
+
+- mattermost 3.4.0
+- add `MATTERMOST_SITE_URL` and `MATTERMOST_ENABLE_EMAIL_BATCHING` variables
+- add `MATTERMOST_WEBSERVER_MODE` variable to control static file handling
+- add `MATTERMOST_ENABLE_CUSTOM_EMOJI` variable
+- add `MATTERMOST_RESTRICT_DIRECT_MESSAGE` variable
+
 ## 3.1.0
 
 - mattermost 3.1.0
