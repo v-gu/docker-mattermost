@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 
-REPONAME = telota/mattermost
+REPONAME = telota/mattermost-team-edition
 VERSION = $(shell grep MATTERMOST_VERSION= Dockerfile | cut -d '=' -f 2 | cut -d ' ' -f 1)
 
 .PHONY: pull-base

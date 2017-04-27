@@ -17,14 +17,6 @@ keeps it tighter to Mattermost itself.
 before the 3.8 release of this image. See `CHANGELOG.md` for a reference
 regarding some important variables.*
 
-# Building the image
-
-There are currently no automated builds linked to the source repository,
-thus you must build the image locally.
-
-```bash
-make
-```
 
 # Quick Start
 
@@ -71,6 +63,8 @@ INSTANCE FOR EACH OF THESE SETTINGS:**
 
 Furthermore you need to set `MM_SERVICESETTINGS_SITEURL`.
 
+You may set `DEBUG` to `true` for a verbose bootstrapping and to set
+Mattermost's debug level to `DEBUG`.
 
 ## File Assets Store
 
@@ -114,10 +108,19 @@ variables:
 - `DB_USER` (default: `postgres` / `root`)
 
 
+# Building the image
+
+The source repository contains a `Makefile` that can be used to build the image
+locally:
+
+    make
+
+
 # References
 
-* [Source repository of this image](https://github.com/telota/docker-mattermost)
+- [Source repository of this image](https://github.com/telota/docker-mattermost)
+- [Image repository on the Docker Hub](https://hub.docker.com/r/telota/mattermost-team-edition/)
 
-* [Mattermost changelog](https://docs.mattermost.com/administration/changelog.html)
-* [Mattermnost source repository](https://github.com/mattermost/platform)
-* [Mattermost documentation](https://docs.mattermost.com)
+- [Mattermost changelog](https://docs.mattermost.com/administration/changelog.html)
+- [Mattermnost source repository](https://github.com/mattermost/platform)
+- [Mattermost documentation](https://docs.mattermost.com)

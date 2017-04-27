@@ -3,7 +3,7 @@ version: '2'
 services:
   mattermost:
     restart: unless-stopped
-    image: funkyfuture/mattermost:3.8.1
+    image: telota/mattermost-team-edition
     ports:
       - "8080:80"
     environment:
