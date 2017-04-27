@@ -99,7 +99,7 @@ You can also define the database configuration as URL with the
 `MM_SQLSETTINGS_DATASOURCE` and an according `MM_SQLSETTINGS_DRIVERNAME`
 environment variable.
 
-## Granular settings variables
+### Granular settings variables
 
 Lastly the `MM_SQLSETTINGS_DATASOURCE` variable can be assembled from these
 variables:
