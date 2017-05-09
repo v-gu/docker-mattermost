@@ -28,7 +28,6 @@ configure_database() {
   echo "Configuring database..."
   finalize_database_parameters
   check_database_connection
-  create_missing_database
 }
 
 finalize_database_parameters() {
@@ -110,35 +109,6 @@ check_database_connection() {
     echo -e "\u2714"
   fi
 
-}
-
-create_missing_database() {
-  echo -n "Testing whether database ${DB_NAME} exists. "
-
-  case ${MM_SQLSETTINGS_DRIVERNAME} in
-    mysql)
-      echo -n "Creating database ${DB_NAME} if necessary. "
-      mysql -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USER} -p${DB_PASS} mysql << EOF
-        CREATE DATABASE IF NOT EXISTS ${DB_NAME};
-        GRANT ALL PRIVILEGES ON ${DB_NAME} TO ${DB_USER};
-EOF
-      echo -e "\u2714"
-      ;;
-    postgres)
-      if psql ${MM_SQLSETTINGS_DATASOURCE}; then
-        echo -e "\u2714"
-      else
-        echo -e "\u2718"
-        echo -n "Creating database ${DB_NAME}. "
-        psql -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER} << EOF
-          CREATE DATABASE ${DB_NAME} WITH OWNER ${DB_USER};
-          GRANT ALL PRIVILEGES ON ${DB_NAME} TO ${DB_USER};
-EOF
-        echo -e "\u2714"
-      fi
-      ;;
-
-  esac
 }
 
 check_version() {
